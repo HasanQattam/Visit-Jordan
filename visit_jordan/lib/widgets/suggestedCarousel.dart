@@ -71,14 +71,17 @@ class SuggestedCarousel extends StatelessWidget {
                     ),
                     child: Stack(
                       children: <Widget>[
-                        ClipRRect(
-                          borderRadius: BorderRadius.circular(20.0),
-                          child: Image(
-                            //container image
-                            height: 164.0,
-                            width: 230.0,
-                            image: AssetImage(destination.imageUrl),
-                            fit: BoxFit.cover,
+                        Hero(
+                          tag: destination.imageUrl,
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(20.0),
+                            child: Image(
+                              //container image
+                              height: 164.0,
+                              width: 230.0,
+                              image: AssetImage(destination.imageUrl),
+                              fit: BoxFit.cover,
+                            ),
                           ),
                         ),
                         Positioned(

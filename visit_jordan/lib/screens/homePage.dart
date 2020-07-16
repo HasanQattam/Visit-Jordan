@@ -21,11 +21,12 @@ class _HomePageState extends State<HomePage> {
         ),
         actions: <Widget>[
           IconButton(
-              color: Color(0xFF27AE60),
-              icon: Icon(Icons.notifications_none),
-              onPressed: () {
-                print('WOW!');
-              })
+            color: Color(0xFF27AE60),
+            icon: Icon(Icons.notifications_none),
+            onPressed: () {
+              print('WOW!');
+            },
+          )
         ],
       ),
       body: SafeArea(
