@@ -10,6 +10,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   int _currentTap = 0;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -32,13 +33,18 @@ class _HomePageState extends State<HomePage> {
       body: SafeArea(
         child: ListView(
           children: <Widget>[
-            Container(
-              color: Colors.black,
-              child: Image.asset(
-                'assets/images/home2.png',
-                fit: BoxFit.cover,
-              ),
-              height: 125.57,
+            Stack(
+              children: <Widget>[
+                Container(
+                  color: Colors.black,
+                  child: Image.asset(
+                    'assets/images/home2.png',
+                    fit: BoxFit.cover,
+                  ),
+                  height: 125.57,
+                  width: MediaQuery.of(context).size.width,
+                ),
+              ],
             ),
             SizedBox(
               height: 20,
