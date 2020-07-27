@@ -1,10 +1,10 @@
-class Categories {
+class Hotel {
   String imageUrl;
   String name;
   String address;
   int price;
 
-  Categories({
+  Hotel({
     this.imageUrl,
     this.name,
     this.address,
@@ -12,23 +12,23 @@ class Categories {
   });
 }
 
-final List<Categories> hotels = [
-  Categories(
+final List<Hotel> hotels = [
+  Hotel(
     imageUrl: 'assets/images/hotel0.jpg',
-    name: 'Hotel 0',
-    address: '404 Great St',
+    name: 'LE ROYAL Hotel',
+    address: 'Zahran Street',
     price: 175,
   ),
-  Categories(
+  Hotel(
     imageUrl: 'assets/images/hotel1.jpg',
-    name: 'Hotel 1',
-    address: '404 Great St',
+    name: 'Vermont Hotel ',
+    address: 'Fifth Circle Abdoun',
     price: 300,
   ),
-  Categories(
+  Hotel(
     imageUrl: 'assets/images/hotel2.jpg',
-    name: 'Hotel 2',
-    address: '404 Great St',
+    name: 'Kempinski Hotel',
+    address: 'King Hussein Street, Aqaba',
     price: 240,
   ),
 ];

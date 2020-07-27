@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:visit_jordan/widgets/categoriesCarousel.dart';
+import 'package:visit_jordan/widgets/HotelsCarousel.dart';
 import 'package:visit_jordan/widgets/suggestedCarousel.dart';
 import 'package:visit_jordan/widgets/textBox.dart';
 
@@ -44,6 +44,18 @@ class _HomePageState extends State<HomePage> {
                   height: 125.57,
                   width: MediaQuery.of(context).size.width,
                 ),
+                Container(
+                  alignment: Alignment.center,
+                  height: 125.57,
+                  width: MediaQuery.of(context).size.width,
+                  child: Text(
+                    'Join our activities in the  most beautiful \n places in Jordan with your local guide',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 22,
+                    ),
+                  ),
+                ),
               ],
             ),
             SizedBox(
@@ -54,9 +66,9 @@ class _HomePageState extends State<HomePage> {
             ),
             SuggestedCarousel(),
             MyTextBoxColumn(
-              text: 'Tourism categories',
+              text: 'Exclusive Hotels',
             ),
-            CategoriesCarousel(),
+            HotelsCarousel(),
           ],
         ),
       ),
