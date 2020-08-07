@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:visit_jordan/models/hotel_model.dart';
+import 'package:visit_jordan/screens/activityPage.dart';
 import 'package:visit_jordan/screens/loginPage.dart';
 import '../constants.dart';
 
@@ -95,11 +96,16 @@ class HotelsCarousel extends StatelessWidget {
                       padding: EdgeInsets.all(8),
                       splashColor: Colors.tealAccent,
                       onPressed: () {
-                        /*if the user was loged in .. else ...*/
+                        /*if the user was loged in .. else ...
                         Navigator.push(
                             context,
                             MaterialPageRoute(
                                 builder: (context) => LoginPage()));
+                                */
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => ActivityPage()));
                       },
                       child: Text(
                         "Reserve ",
