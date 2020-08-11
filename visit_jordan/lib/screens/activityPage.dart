@@ -2,8 +2,11 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:visit_jordan/data/data.dart';
+import 'package:visit_jordan/models/activityWall_model.dart';
 import 'package:visit_jordan/models/categories_model.dart';
 import 'package:http/http.dart' as http;
+import 'package:visit_jordan/screens/searchActivity.dart';
+import 'package:visit_jordan/widgets/wallphotos.dart';
 
 class ActivityPage extends StatefulWidget {
   @override
@@ -12,11 +15,20 @@ class ActivityPage extends StatefulWidget {
 
 class _ActivityPageState extends State<ActivityPage> {
   List<CategorieModel> categories = new List();
+  List<WallpaperModel> wallpapers = new List();
+  TextEditingController searchController = new TextEditingController();
   getAllPhotos() async {
     var response = await http.get("https://api.pexels.com/v1/curated",
         headers: {"Authorization": apiKey});
-   // print(response.body.toString());
-   Map<String,dynamic> jsonData= jsonDecode(response.body);
+    // print(response.body.toString());
+    Map<String, dynamic> jsonData = jsonDecode(response.body);
+    jsonData["photos"].forEach((element) {
+      //print(element);
+      WallpaperModel wallpaperModel = new WallpaperModel();
+      wallpaperModel = WallpaperModel.fromMap(element);
+      wallpapers.add(wallpaperModel);
+    });
+    setState(() {});
   }
 
   int _currentTap = 0;
@@ -47,48 +59,62 @@ class _ActivityPageState extends State<ActivityPage> {
           )
         ],
       ),
-      body: Container(
-        child: Column(
-          children: [
-            SizedBox(height: 20),
-            Container(
-              decoration: BoxDecoration(
-                color: Color(0xffe8f5e9),
-                borderRadius: BorderRadius.circular(30),
-              ),
-              margin: EdgeInsets.symmetric(horizontal: 24),
-              padding: EdgeInsets.symmetric(horizontal: 24),
-              child: Row(
-                children: [
-                  Expanded(
-                    child: TextField(
-                      decoration: InputDecoration(
-                        hintText: "search",
-                        border: InputBorder.none,
+      body: SingleChildScrollView(
+        child: Container(
+          child: Column(
+            children: [
+              SizedBox(height: 20),
+              Container(
+                decoration: BoxDecoration(
+                  color: Color(0xffe8f5e9),
+                  borderRadius: BorderRadius.circular(30),
+                ),
+                margin: EdgeInsets.symmetric(horizontal: 24),
+                padding: EdgeInsets.symmetric(horizontal: 24),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: TextField(
+                        controller: searchController,
+                        decoration: InputDecoration(
+                          hintText: "search",
+                          border: InputBorder.none,
+                        ),
                       ),
                     ),
-                  ),
-                  Icon(Icons.search),
-                ],
+                    GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => Search(
+                                        searchQuere: searchController.text,
+                                      )));
+                        },
+                        child: Icon(Icons.search)),
+                  ],
+                ),
               ),
-            ),
-            SizedBox(height: 20),
-            Container(
-              height: 80,
-              child: ListView.builder(
-                padding: EdgeInsets.symmetric(horizontal: 24),
-                scrollDirection: Axis.horizontal,
-                itemCount: categories.length,
-                shrinkWrap: true,
-                itemBuilder: (context, index) {
-                  return CategoriesTile(
-                    title: categories[index].categorieName,
-                    imgUrl: categories[index].imgUrl,
-                  );
-                },
+              SizedBox(height: 20),
+              Container(
+                height: 80,
+                child: ListView.builder(
+                  padding: EdgeInsets.symmetric(horizontal: 24),
+                  scrollDirection: Axis.horizontal,
+                  itemCount: categories.length,
+                  shrinkWrap: true,
+                  itemBuilder: (context, index) {
+                    return CategoriesTile(
+                      title: categories[index].categorieName,
+                      imgUrl: categories[index].imgUrl,
+                    );
+                  },
+                ),
               ),
-            ),
-          ],
+              SizedBox(height: 20),
+              wallpapersList(wallpapers: wallpapers, context: context),
+            ],
+          ),
         ),
       ),
       bottomNavigationBar: BottomNavigationBar(
