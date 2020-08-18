@@ -8,28 +8,28 @@ List<CategorieModel> getCategories() {
 
   //
   categorieModel.imgUrl =
-      "https://images.pexels.com/photos/545008/pexels-photo-545008.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500";
+      "https://images.pexels.com/photos/3370311/pexels-photo-3370311.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940";
   categorieModel.categorieName = "Medical Tourism";
   categories.add(categorieModel);
   categorieModel = new CategorieModel();
 
   //
   categorieModel.imgUrl =
-      "https://images.pexels.com/photos/704320/pexels-photo-704320.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500";
-  categorieModel.categorieName = "Cultural tourism";
+      "https://images.pexels.com/photos/3264722/pexels-photo-3264722.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940";
+  categorieModel.categorieName = "Cultural Tourism";
   categories.add(categorieModel);
   categorieModel = new CategorieModel();
 
   //
   categorieModel.imgUrl =
-      "https://images.pexels.com/photos/34950/pexels-photo.jpg?auto=compress&cs=tinysrgb&dpr=2&w=500";
+      "https://images.pexels.com/photos/705772/pexels-photo-705772.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940";
   categorieModel.categorieName = "Religious tourism";
   categories.add(categorieModel);
   categorieModel = new CategorieModel();
 
   //
   categorieModel.imgUrl =
-      "https://images.pexels.com/photos/466685/pexels-photo-466685.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500";
+      "https://images.pexels.com/photos/1098365/pexels-photo-1098365.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940";
   categorieModel.categorieName = "Adventure Tourism";
   categories.add(categorieModel);
   categorieModel = new CategorieModel();

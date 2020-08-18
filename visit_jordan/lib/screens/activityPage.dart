@@ -17,8 +17,10 @@ class _ActivityPageState extends State<ActivityPage> {
   List<CategorieModel> categories = new List();
   List<WallpaperModel> wallpapers = new List();
   TextEditingController searchController = new TextEditingController();
+  String query = "jordan";
   getAllPhotos() async {
-    var response = await http.get("https://api.pexels.com/v1/curated",
+    var response = await http.get(
+        "https://api.pexels.com/v1/search?query=$query&per_page=15&page=1",
         headers: {"Authorization": apiKey});
     // print(response.body.toString());
     Map<String, dynamic> jsonData = jsonDecode(response.body);
@@ -83,15 +85,16 @@ class _ActivityPageState extends State<ActivityPage> {
                       ),
                     ),
                     GestureDetector(
-                        onTap: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => Search(
-                                        searchQuere: searchController.text,
-                                      )));
-                        },
-                        child: Icon(Icons.search)),
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => Search(
+                                      searchQuere: searchController.text,
+                                    )));
+                      },
+                      child: Icon(Icons.search),
+                    ),
                   ],
                 ),
               ),
