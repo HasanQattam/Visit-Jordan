@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:visit_jordan/models/hotel_model.dart';
 import 'package:visit_jordan/screens/activityPage.dart';
+import 'package:visit_jordan/screens/apitest.dart';
 import 'package:visit_jordan/screens/loginPage.dart';
 import '../constants.dart';
 
@@ -102,10 +103,14 @@ class HotelsCarousel extends StatelessWidget {
                             MaterialPageRoute(
                                 builder: (context) => LoginPage()));
                                 */
-                        Navigator.push(
+                             Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => ActivityPage()));
+                                builder: (context) => ActivityPage())); 
+                       /* Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => TestApi1()));*/
                       },
                       child: Text(
                         "Reserve ",

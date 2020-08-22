@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:visit_jordan/apis/RegesterApi.dart';
+import 'package:visit_jordan/models/genral_response.dart';
+import 'package:visit_jordan/screens/loginPage.dart';
 
 import '../constants.dart';
 
@@ -9,6 +12,16 @@ class SignUpPage extends StatefulWidget {
 }
 
 class _SignUpPageState extends State<SignUpPage> {
+final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+
+TextEditingController name=TextEditingController();
+TextEditingController password=TextEditingController();
+TextEditingController email=TextEditingController();
+
+  RegesterApi api = RegesterApi();
+
+  GeneralResponse response = GeneralResponse();
+
   Widget _buildEmailTF() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -23,6 +36,7 @@ class _SignUpPageState extends State<SignUpPage> {
           decoration: kBoxDecorationStyle,
           height: 60.0,
           child: TextField(
+            controller: email,
             keyboardType: TextInputType.emailAddress,
             style: TextStyle(
               color: kPrimaryColor,
@@ -36,6 +50,42 @@ class _SignUpPageState extends State<SignUpPage> {
                 color: kPrimaryColor,
               ),
               hintText: 'Enter your Email',
+              hintStyle: kHintTextStyle,
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildNamelTF() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        Text(
+          'Name',
+          style: kLabelStyle,
+        ),
+        SizedBox(height: 10.0),
+        Container(
+          alignment: Alignment.centerLeft,
+          decoration: kBoxDecorationStyle,
+          height: 60.0,
+          child: TextField(
+            controller: name,
+            keyboardType: TextInputType.text,
+            style: TextStyle(
+              color: kPrimaryColor,
+              fontFamily: 'OpenSans',
+            ),
+            decoration: InputDecoration(
+              border: InputBorder.none,
+              contentPadding: EdgeInsets.only(top: 14.0),
+              prefixIcon: Icon(
+                Icons.person,
+                color: kPrimaryColor,
+              ),
+              hintText: 'Enter your Name',
               hintStyle: kHintTextStyle,
             ),
           ),
@@ -58,6 +108,7 @@ class _SignUpPageState extends State<SignUpPage> {
           decoration: kBoxDecorationStyle,
           height: 60.0,
           child: TextField(
+            controller: password,
             obscureText: true,
             style: TextStyle(
               color: kPrimaryColor,
@@ -85,7 +136,6 @@ class _SignUpPageState extends State<SignUpPage> {
       width: double.infinity,
       child: RaisedButton(
         elevation: 5.0,
-        onPressed: () => print('Login Button Pressed'),
         padding: EdgeInsets.all(15.0),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(30.0),
@@ -101,6 +151,14 @@ class _SignUpPageState extends State<SignUpPage> {
             fontFamily: 'OpenSans',
           ),
         ),
+        onPressed: () {
+          api.regester(name.text, email.text, password.text).then((value){
+            if(value.status){
+              Navigator.push(context, MaterialPageRoute(builder: (context)=>LoginPage()));
+              _scaffoldKey.currentState.showSnackBar(SnackBar(content: Text(value.message)));
+            }
+          });
+        },
       ),
     );
   }
@@ -174,6 +232,7 @@ class _SignUpPageState extends State<SignUpPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
       body: AnnotatedRegion<SystemUiOverlayStyle>(
         value: SystemUiOverlayStyle.light,
         child: GestureDetector(
@@ -214,6 +273,7 @@ class _SignUpPageState extends State<SignUpPage> {
                           fontWeight: FontWeight.bold,
                         ),
                       ),
+                      _buildNamelTF(),
                       SizedBox(height: 30.0),
                       _buildEmailTF(),
                       SizedBox(

@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:visit_jordan/apis/LoginApi.dart';
+import 'package:visit_jordan/screens/homePage.dart';
 import 'package:visit_jordan/screens/signUpPage.dart';
 import 'signUpPage.dart';
 import '../constants.dart';
@@ -10,8 +13,12 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  bool _rememberMe = false;
+  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
+  bool _rememberMe = false;
+  TextEditingController email = TextEditingController();
+  TextEditingController password = TextEditingController();
+  LoginApi api = LoginApi();
   Widget _buildEmailTF() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -26,6 +33,7 @@ class _LoginPageState extends State<LoginPage> {
           decoration: kBoxDecorationStyle,
           height: 60.0,
           child: TextField(
+            controller: email,
             keyboardType: TextInputType.emailAddress,
             style: TextStyle(
               color: kPrimaryColor,
@@ -61,6 +69,7 @@ class _LoginPageState extends State<LoginPage> {
           decoration: kBoxDecorationStyle,
           height: 60.0,
           child: TextField(
+            controller: password,
             obscureText: true,
             style: TextStyle(
               color: kPrimaryColor,
@@ -129,7 +138,6 @@ class _LoginPageState extends State<LoginPage> {
       width: double.infinity,
       child: RaisedButton(
         elevation: 5.0,
-        onPressed: () => print('Login Button Pressed'),
         padding: EdgeInsets.all(15.0),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(30.0),
@@ -145,6 +153,16 @@ class _LoginPageState extends State<LoginPage> {
             fontFamily: 'OpenSans',
           ),
         ),
+        onPressed: () {
+          api.login(email.text, password.text).then((value) {
+            if (value.id != null) {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => HomePage()));
+            }else{
+              _scaffoldKey.currentState.showSnackBar(SnackBar(content: Text('Error occured')));
+            }
+          });
+        },
       ),
     );
   }
@@ -251,6 +269,7 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key:_scaffoldKey,
       body: AnnotatedRegion<SystemUiOverlayStyle>(
         value: SystemUiOverlayStyle.light,
         child: GestureDetector(

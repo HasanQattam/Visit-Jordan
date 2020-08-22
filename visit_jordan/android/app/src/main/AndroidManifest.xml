@@ -9,6 +9,8 @@
         android:name="io.flutter.app.FlutterApplication"
         android:label="visit_jordan"
         android:icon="@mipmap/ic_launcher">
+        <meta-data android:name="com.google.android.geo.API_KEY"
+               android:value="AIzaSyAEp1O48SEqMiMVMNflhxXQM_tmUD8Ww6M"/>
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"

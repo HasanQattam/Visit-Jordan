@@ -6,7 +6,11 @@ import 'package:visit_jordan/models/activityWall_model.dart';
 import 'package:visit_jordan/models/categories_model.dart';
 import 'package:http/http.dart' as http;
 import 'package:visit_jordan/screens/searchActivity.dart';
+import 'package:visit_jordan/screens/searchCategories.dart';
+import 'package:visit_jordan/widgets/imageView.dart';
 import 'package:visit_jordan/widgets/wallphotos.dart';
+import 'package:visit_jordan/sharedui/BottomNavigationPage.Dart';
+
 
 class ActivityPage extends StatefulWidget {
   @override
@@ -20,7 +24,7 @@ class _ActivityPageState extends State<ActivityPage> {
   String query = "jordan";
   getAllPhotos() async {
     var response = await http.get(
-        "https://api.pexels.com/v1/search?query=$query&per_page=15&page=1",
+        "https://api.pexels.com/v1/search?query=$query&per_page=9&page=1",
         headers: {"Authorization": apiKey});
     // print(response.body.toString());
     Map<String, dynamic> jsonData = jsonDecode(response.body);
@@ -120,28 +124,7 @@ class _ActivityPageState extends State<ActivityPage> {
           ),
         ),
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _currentTap,
-        onTap: (int value) {
-          setState(() {
-            _currentTap = value;
-          });
-        },
-        items: [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            title: SizedBox.shrink(),
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.outlined_flag),
-            title: SizedBox.shrink(),
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.place),
-            title: SizedBox.shrink(),
-          ),
-        ],
-      ),
+           bottomNavigationBar: BottomNAvigationWidget(),
     );
   }
 }
@@ -161,33 +144,44 @@ class CategoriesTile extends StatelessWidget {
   CategoriesTile({@required this.imgUrl, @required this.title});
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.only(right: 4),
-      padding: EdgeInsets.only(right: 4),
-      child: Stack(
-        children: <Widget>[
-          ClipRRect(
-            borderRadius: BorderRadius.circular(8),
-            child: Image.network(imgUrl,
-                height: 80, width: 130, fit: BoxFit.cover),
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) =>
+                Categorie(categorieName: title.toLowerCase() + "in jordan"),
           ),
-          ClipRRect(
-            borderRadius: BorderRadius.circular(8),
-            child: Container(
-              color: Colors.black38,
-              height: 80,
-              width: 130,
-              alignment: Alignment.center,
-              child: Text(
-                title,
-                style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 15,
-                    fontWeight: FontWeight.w500),
+        );
+      },
+      child: Container(
+        margin: EdgeInsets.only(right: 4),
+        padding: EdgeInsets.only(right: 4),
+        child: Stack(
+          children: <Widget>[
+            ClipRRect(
+              borderRadius: BorderRadius.circular(8),
+              child: Image.network(imgUrl,
+                  height: 80, width: 130, fit: BoxFit.cover),
+            ),
+            ClipRRect(
+              borderRadius: BorderRadius.circular(8),
+              child: Container(
+                color: Colors.black38,
+                height: 80,
+                width: 130,
+                alignment: Alignment.center,
+                child: Text(
+                  title,
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 15,
+                      fontWeight: FontWeight.w500),
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

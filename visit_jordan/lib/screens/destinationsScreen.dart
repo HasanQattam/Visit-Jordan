@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:visit_jordan/models/activity_model.dart';
 import 'package:visit_jordan/models/destination_model.dart';
 import 'package:visit_jordan/screens/loginPage.dart';
@@ -16,6 +17,8 @@ class DestinationsScreen extends StatefulWidget {
 }
 
 class _DestinationsScreenState extends State<DestinationsScreen> {
+    final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+
   Text buildRaitingStars(int raiting) {
     String stars = '';
     for (var i = 0; i < raiting; i++) {
@@ -27,7 +30,8 @@ class _DestinationsScreenState extends State<DestinationsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Column(
+      key: _scaffoldKey,
+      body: Column(
       children: <Widget>[
         Stack(
           children: <Widget>[
@@ -237,11 +241,8 @@ class _DestinationsScreenState extends State<DestinationsScreen> {
                         padding: EdgeInsets.all(10),
                         splashColor: Colors.tealAccent,
                         onPressed: () {
-                          /*if the user was loged in .. else ...*/
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => LoginPage()));
+                                  Navigator.push(context, MaterialPageRoute(builder: (context) => LoginPage()));
+                        //  checkLogin();
                         },
                         child: Text(
                           "Join",
@@ -257,5 +258,13 @@ class _DestinationsScreenState extends State<DestinationsScreen> {
         )
       ],
     ));
+  }
+
+  checkLogin()async{
+     final SharedPreferences preferences = await SharedPreferences.getInstance();
+     if (preferences.getString('id') == null)
+        Navigator.push(context, MaterialPageRoute(builder: (context) => LoginPage()));
+      else
+         _scaffoldKey.currentState.showSnackBar(SnackBar(content: Text('action')));
   }
 }

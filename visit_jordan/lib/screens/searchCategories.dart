@@ -1,23 +1,20 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
 import 'package:visit_jordan/data/data.dart';
+import 'package:http/http.dart' as http;
 import 'package:visit_jordan/models/activityWall_model.dart';
 import 'package:visit_jordan/widgets/wallphotos.dart';
 
-class Search extends StatefulWidget {
-  final String searchQuere;
-
-  Search({this.searchQuere});
+class Categorie extends StatefulWidget {
+  final String categorieName;
+  Categorie({this.categorieName});
   @override
-  _SearchState createState() => _SearchState();
+  _CategorieState createState() => _CategorieState();
 }
 
-class _SearchState extends State<Search> {
+class _CategorieState extends State<Categorie> {
   List<WallpaperModel> wallpapers = new List();
-
-  TextEditingController searchController = new TextEditingController();
 
   getSearchedPhotos(String query) async {
     var response = await http.get(
@@ -36,9 +33,9 @@ class _SearchState extends State<Search> {
 
   @override
   void initState() {
-    getSearchedPhotos(widget.searchQuere);
+    // TODO: implement initState
+    getSearchedPhotos(widget.categorieName);
     super.initState();
-    searchController.text = widget.searchQuere;
   }
 
   @override
@@ -64,34 +61,6 @@ class _SearchState extends State<Search> {
         child: Container(
           child: Column(
             children: [
-              SizedBox(height: 20),
-              Container(
-                decoration: BoxDecoration(
-                  color: Color(0xffe8f5e9),
-                  borderRadius: BorderRadius.circular(30),
-                ),
-                margin: EdgeInsets.symmetric(horizontal: 24),
-                padding: EdgeInsets.symmetric(horizontal: 24),
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: TextField(
-                        controller: searchController,
-                        decoration: InputDecoration(
-                          hintText: "search",
-                          border: InputBorder.none,
-                        ),
-                      ),
-                    ),
-                    GestureDetector(
-                      onTap: () {
-                        getSearchedPhotos(searchController.text);
-                      },
-                      child: Icon(Icons.search),
-                    ),
-                  ],
-                ),
-              ),
               SizedBox(height: 20),
               wallpapersList(wallpapers: wallpapers, context: context),
             ],

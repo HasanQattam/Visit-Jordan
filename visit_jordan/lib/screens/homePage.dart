@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:visit_jordan/apis/ActivityApi.dart';
+import 'package:visit_jordan/apis/LoginApi.dart';
+import 'package:visit_jordan/apis/RegesterApi.dart';
+import 'package:visit_jordan/models/genral_response.dart';
 import 'package:visit_jordan/widgets/HotelsCarousel.dart';
 import 'package:visit_jordan/widgets/suggestedCarousel.dart';
 import 'package:visit_jordan/widgets/textBox.dart';
+import 'package:visit_jordan/sharedui/BottomNavigationPage.Dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -9,10 +14,24 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  int _currentTap = 0;
+  LoginApi login = LoginApi();
+  ActivityApi act = ActivityApi();
+
+//  GeneralResponse response = GeneralResponse();
+
+  @override
+  void initState() {
+    super.initState();
+
+    // api.regester("a","b","c").then((value){response=value;
+    //         print(response.message);
+// });
+  }
 
   @override
   Widget build(BuildContext context) {
+    act.activity();
+    login.login('b', 'c');
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Color(0xFFFFFFFF),
@@ -72,28 +91,7 @@ class _HomePageState extends State<HomePage> {
           ],
         ),
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _currentTap,
-        onTap: (int value) {
-          setState(() {
-            _currentTap = value;
-          });
-        },
-        items: [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            title: SizedBox.shrink(),
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.outlined_flag),
-            title: SizedBox.shrink(),
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.place),
-            title: SizedBox.shrink(),
-          ),
-        ],
-      ),
+      bottomNavigationBar: BottomNAvigationWidget(),
     );
   }
 }
